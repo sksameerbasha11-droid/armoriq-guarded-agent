@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: sentinel-armoriq-demo
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: ARMORIQ_API_KEY
+        sync: false
+      - key: USER_EMAIL
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false

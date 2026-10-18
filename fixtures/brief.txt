@@ -1,0 +1,4 @@
+Demo brief
+==========
+This is a deliberately non-sensitive document used to demonstrate an allowed MCP read.
+The write tool is included so an ArmorIQ policy can demonstrate a blocked action.
