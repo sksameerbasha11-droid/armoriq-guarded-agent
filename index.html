@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sentinel / ArmorIQ Agent</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <a class="brand" href="/"><span class="brand-mark">S</span><span>Sentinel<span class="muted"> / ArmorIQ</span></span></a>
+        <div class="top-status"><span class="pulse"></span><span id="status-text">Checking connection</span></div>
+      </header>
+      <main>
+        <section class="hero">
+          <div class="eyebrow">GOVERNED AI OPERATIONS</div>
+          <h1>Make every agent action<br /><em>intentional.</em></h1>
+          <p>Describe a goal. Sentinel plans the MCP action, asks ArmorIQ for a cryptographic policy decision, and executes only what is allowed.</p>
+          <div class="hero-actions"><button class="primary" id="demo-btn">Run live policy demo <span>→</span></button><a href="https://platform.armoriq.ai" target="_blank">Open ArmorIQ console ↗</a></div>
+        </section>
+        <section class="workspace">
+          <div class="panel request-panel">
+            <div class="panel-heading"><span class="step">01</span><div><h2>Give the agent a goal</h2><p>Natural language becomes a typed MCP plan.</p></div></div>
+            <form id="goal-form">
+              <label for="goal">Your goal</label>
+              <textarea id="goal" rows="3">Read the non-sensitive demo brief</textarea>
+              <label for="note">Optional note <span>(used for write tests)</span></label>
+              <input id="note" value="This write should be blocked by policy." />
+              <button class="primary full" type="submit" id="run-btn">Run guarded action <span>→</span></button>
+            </form>
+            <div class="quick"><span>Try a scenario</span><button data-goal="Read the non-sensitive demo brief">Allowed read</button><button data-goal="Write an operator note">Blocked write</button></div>
+          </div>
+          <div class="panel trace-panel">
+            <div class="panel-heading"><span class="step">02</span><div><h2>Enforcement trace</h2><p>Live result from ArmorIQ + MCP.</p></div></div>
+            <div class="empty" id="empty"><div class="shield">◇</div><strong>Ready for an intent</strong><span>Your execution trace will appear here.</span></div>
+            <div id="trace" class="trace hidden"></div>
+          </div>
+        </section>
+        <section class="proof">
+          <div><span class="proof-icon">✓</span><div><strong>Plan captured</strong><span>Actions are explicit before tools run</span></div></div>
+          <div><span class="proof-icon">◈</span><div><strong>Policy enforced</strong><span>ArmorIQ decides allow or block</span></div></div>
+          <div><span class="proof-icon">↗</span><div><strong>Audit reported</strong><span>Every outcome is traceable</span></div></div>
+        </section>
+      </main>
+      <footer><span>LOCAL DEMO ENVIRONMENT</span><span>REAL ARMORIQ ENFORCEMENT · NO PRODUCTION DATA</span></footer>
+    </div>
+    <script src="/app.js"></script>
+  </body>
+</html>
