@@ -76,7 +76,7 @@ Start the local dashboard:
 npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000). The dashboard has a
+Open [the live Vercel dashboard](https://armoriq-guarded-agent-virid.vercel.app/). The dashboard has a
 natural-language goal form, quick allowed/blocked scenarios, and a live
 enforcement trace. It calls the same ArmorIQ SDK and MCP server as the CLI;
 the browser never receives the API key. Configure `.env` first, otherwise the
