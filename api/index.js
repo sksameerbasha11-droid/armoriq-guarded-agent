@@ -1,10 +1,44 @@
 import { runGuarded, configurationError } from "../src/guarded.js";
+import fs from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 function sendJson(response, status, body) {
   response.status(status).setHeader("cache-control", "no-store").json(body);
 }
 
+async function sendFrontendFile(request, response) {
+  const requestedPath = typeof request.query?.path === "string"
+    ? request.query.path
+    : request.url?.split("?")[0].replace(/^\/+/, "");
+  const fileName = requestedPath || "index.html";
+  const filePath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "web", fileName);
+  const relativePath = path.relative(path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "web"), filePath);
+  if (relativePath.startsWith("..") || path.isAbsolute(relativePath)) {
+    return sendJson(response, 404, { error: "Not found." });
+  }
+  try {
+    const content = await fs.readFile(filePath);
+    const contentTypes = {
+      ".html": "text/html",
+      ".css": "text/css",
+      ".js": "text/javascript"
+    };
+    response.status(200)
+      .setHeader("cache-control", "no-cache")
+      .setHeader("content-type", `${contentTypes[path.extname(filePath)] ?? "application/octet-stream"}; charset=utf-8`)
+      .send(content);
+  } catch (error) {
+    if (error?.code === "ENOENT") return sendJson(response, 404, { error: "Not found." });
+    throw error;
+  }
+}
+
 export default async function handler(request, response) {
+  if (request.method === "GET" && (typeof request.query?.path === "string" || !request.url?.startsWith("/api/"))) {
+    return sendFrontendFile(request, response);
+  }
+
   if (request.method === "GET" && request.url?.split("?")[0] === "/api/status") {
     const error = configurationError();
     return sendJson(response, 200, {
